@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Todo App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <section class="container login-container">
+        <section class="card">
+          <section class="card-content">
+           <h1>Edit List Item</h1>
+          <ul class="card-content">
+                <% todoTasks.forEach(todoItems=> { %>
+                    <% if (todoItems._id==idTask) { %>
+                        <li class="todo-list-item">
+                            <form action="/edit/<%= todoItems._id %>" method="POST">
+                                <input type="text" value="<%= todoItems.todo %>" name="todo">
+                              <input type="text" value="<%= todoItems.dueDate %>" name='dueDate' class="datepicker">
+                                <button type="submit" class="confirm">Confirm</button>
+                                <a href="/todos" class="cancel">Cancel</a>
+                            </form>
+                        </li>
+                        <% } else { %>
+                            <li class='todoItem' data-id='<%=todoItems._id%>'>
+                                <span class='<%= todoItems.completed === true ? 'completed' : 'not' %>'><%= todoItems.todo %></span>
+                              <span class="dueDate"><%= todoItems.dueDate ?  new Date(todoItems.dueDate).toDateString() : todoItems.dueDate %></span>
+                              <a href="/edit/<%= todoItems._id %>" class="edit">
+                                        <span class="fas fa-edit"></span>
+                                        </a>
+                                <span class='fa fa-trash'></span>
+                            </li>
+                        <% } %>
+                 <% }) %>
+            </ul>
+        </section>
+    
+    </section>
+                 </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        const Calendar = document.querySelector('.datepicker')
+        M.Datepicker.init(Calendar, {
+            format: 'dd-mmmm-yy',
+            showClearBtn: true
+        })
+    </script>
+    <script src="js/main.js"></script>
+</body>

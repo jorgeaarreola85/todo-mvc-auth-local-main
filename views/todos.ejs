@@ -1,32 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <h1>Todos</h1>
-    <ul>
-    <% todos.forEach( el => { %>
-            <li class='todoItem' data-id='<%=el._id%>'>
-                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
-                <span class='del'> Delete </span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!--ICONS-->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container login-container">
+      <div class="card">
+        <div class="card-content">
+          <!--</div>->-->
+          <!--</div>
+    </div>-->
+          <h1>Todos</h1>
+          <ul>
+            <% todos.forEach( el => { %>
+            <li class="todoItem" data-id="<%=el._id%>">
+              <span class="<%= el.completed === true ? 'completed' : 'not'%>"
+                ><%= el.todo %> | <%= el.dueDate ? new
+                Date(el.dueDate).toDateString() : null %></span
+              >
+              <a href="/edit/<%= el._id %>" class="edit">
+                <span class="fas fa-edit"></span>
+              </a>
+              <span class="del fa fa-trash"></span>
             </li>
-    <% }) %>    
-    </ul>
+            <% }) %>
+          </ul>
 
-    <h2><%= user.userName %> has <%= left %> things left to do.</h2>
+          <h2><%= user.userName %> has <%= left %> things left to do.</h2>
 
-    <form action="/todos/createTodo" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
-        <input type="submit">
-    </form>
+          <form action="/todos/createTodo" method="POST">
+            <input type="text" placeholder="Enter Todo Item" name="todoItem" />
+            <input
+              type="text"
+              class="datepicker"
+              placeholder="Pick Due Date"
+              name="dueDate"
+            />
+            <input type="submit" />
+          </form>
 
-    <a href="/logout">Logout</a>
+          <a href="/logout">Logout</a>
+        </div>
+      </div>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+      const Calendar = document.querySelector(".datepicker");
+      M.Datepicker.init(Calendar, {
+        format: "dd-mmmm-yy",
+        showClearBtn: true,
+      });
+    </script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>
